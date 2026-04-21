@@ -1,0 +1,161 @@
+<!DOCTYPE html>  
+<html lang="pt-br">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>Ditto'store</title>  
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>  
+        *{margin:0;padding:0;box-sizing:border-box;}  
+
+        body{
+            font-family:'Poppins', sans-serif;
+            background:#f0f0f0;
+        }
+
+        .topo{
+            background:#ff69b4;
+            color:white;
+            padding:15px;
+            text-align:center;
+        }
+
+        .container{
+            max-width:1200px;
+            margin:auto;
+            padding:15px;
+        }
+
+        .produtos{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(250px,250px));
+            justify-content:center;
+            gap:20px;
+            margin:20px 0;
+        }
+
+        @keyframes flutuar {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .produto{
+            background:white;
+            border:1px solid #ddd;
+            border-radius:10px;
+            overflow:hidden;
+            animation: flutuar 3s ease-in-out infinite;
+            transition:0.3s;
+        }
+
+        .produto:hover{
+            transform:scale(1.05) translateY(-5px);
+        }
+
+        .produto-imagem{
+            width:100%;
+            height:200px;
+            background:#f9f9f9;
+            text-align:center;
+            padding:10px;
+        }
+
+        .produto-imagem img{
+            width:100%;
+            height:100%;
+            object-fit:contain;
+        }
+
+        .produto-info{
+            padding:15px;
+            text-align:center;
+        }
+
+        .preco{
+            font-size:22px;
+            color:#ff69b4;
+            font-weight:bold;
+            margin:10px 0;
+        }
+
+        .preco-antigo{
+            font-size:14px;
+            color:#999;
+            text-decoration:line-through;
+        }
+
+        .comprar{
+            display:block;
+            background:#25d366;
+            color:white;
+            text-align:center;
+            padding:10px;
+            border-radius:20px;
+            text-decoration:none;
+            transition:0.3s;
+        }
+
+        .comprar:hover{
+            background:#1ebe5d;
+        }
+
+        .rodape{
+            background:#333;
+            color:white;
+            text-align:center;
+            padding:20px;
+            margin-top:30px;
+        }
+
+    </style>  
+</head>  
+<body>  
+  
+<div class="topo">  
+    <h1>Ditto'store</h1>  
+    <p>Compre seu pokémon Ditto direto pelo WhatsApp</p>  
+</div>  
+  
+<div class="container">  
+
+    <div class="produtos">  
+
+        <div class="produto">  
+            <div class="produto-imagem"><img src="https://giffiles.alphacoders.com/916/91637.gif"></div>  
+            <div class="produto-info">  
+                <h3>Ditto 1</h3>  
+                <p>PEQUENO</p>  
+                <div class="preco">R$ 49.90</div>  
+                <a class="comprar" href="https://wa.me/5582981600505?text=Quero%20comprar%20Ditto%201%20-%20R$49,90">Comprar no WhatsApp</a>  
+            </div>  
+        </div>  
+
+        <div class="produto">  
+            <div class="produto-imagem"><img src="https://giffiles.alphacoders.com/916/91637.gif"></div>  
+            <div class="produto-info">  
+                <h3>Ditto 2</h3>  
+                <p>GRANDE</p>  
+                <div class="preco">R$ 59.90</div>  
+                <a class="comprar" href="https://wa.me/5582981600505?text=Quero%20comprar%20Ditto%202%20-%20R$59,90">Comprar no WhatsApp</a>  
+            </div>  
+        </div>  
+
+        <div class="produto">  
+            <div class="produto-imagem"><img src="https://giffiles.alphacoders.com/916/91637.gif"></div>  
+            <div class="produto-info">  
+                <h3>Ditto 3</h3>  
+                <p>MÉDIO</p>  
+                <div class="preco">R$ 149.90 <span class="preco-antigo">R$ 299.90</span></div>  
+                <a class="comprar" href="https://wa.me/5582981600505?text=Quero%20comprar%20Ditto%203%20-%20R$149,90">Comprar no WhatsApp</a>  
+            </div>  
+        </div>  
+
+    </div>  
+</div>  
+  
+<div class="rodape"><p>Ditto'store - josy - 2026</p></div>  
+  
+</body>  
+</html>
