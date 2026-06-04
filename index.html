@@ -1,167 +1,561 @@
-<!DOCTYPE html>  
-<html lang="pt-br">  
-<head>  
-    <meta charset="UTF-8">  
-    <title>Ditto'store</title>  
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ditto'store</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-    <style>  
-        *{margin:0;padding:0;box-sizing:border-box;}  
+<style>
 
-        body{
-            font-family:'Poppins', sans-serif;
-            background:#f0f0f0;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        .topo{
-            background:#ff69b4;
-            color:white;
-            padding:15px;
-            text-align:center;
-        }
+body{
+    font-family:'Poppins', sans-serif;
+    background:#f0f0f0;
+    transition:0.4s;
+}
 
-        .container{
-            max-width:1200px;
-            margin:auto;
-            padding:15px;
-        }
+.topo{
+    background:#ff69b4;
+    color:white;
+    padding:20px;
+    text-align:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
 
-        .produtos{
-            display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(250px,250px));
-            justify-content:center;
-            gap:20px;
-            margin:20px 0;
-        }
+.topo button{
+    margin-top:10px;
+    padding:8px 15px;
+    border:none;
+    border-radius:20px;
+    cursor:pointer;
+    background:white;
+    color:#ff69b4;
+    font-weight:bold;
+}
 
-        @keyframes flutuar {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-            100% { transform: translateY(0px); }
-        }
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:15px;
+}
 
-        .produto{
-            background:white;
-            border:1px solid #ddd;
-            border-radius:10px;
-            overflow:hidden;
-            animation: flutuar 3s ease-in-out infinite;
-            transition:0.3s;
-        }
+#pesquisa{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    margin:20px 0;
+    font-size:16px;
+}
 
-        .produto:hover{
-            transform:scale(1.05) translateY(-5px);
-        }
+.produtos{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,250px));
+    justify-content:center;
+    gap:20px;
+    margin:20px 0;
+}
 
-        .produto-imagem{
-            width:100%;
-            height:200px;
-            background:#f9f9f9;
-            text-align:center;
-            padding:10px;
-        }
+@keyframes flutuar{
+    0%{transform:translateY(0px);}
+    50%{transform:translateY(-8px);}
+    100%{transform:translateY(0px);}
+}
 
-        .produto-imagem img{
-            width:100%;
-            height:100%;
-            object-fit:contain;
-        }
+.produto{
+    background:white;
+    border-radius:10px;
+    overflow:hidden;
+    animation:flutuar 3s ease-in-out infinite;
+    transition:0.3s;
+    box-shadow:0 5px 10px rgba(0,0,0,0.1);
+}
 
-        .produto-info{
-            padding:15px;
-            text-align:center;
-        }
+.produto:hover{
+    transform:scale(1.05);
+}
 
-        .preco{
-            font-size:22px;
-            color:#ff69b4;
-            font-weight:bold;
-            margin:10px 0;
-        }
+.produto-imagem{
+    width:100%;
+    height:200px;
+    background:#f9f9f9;
+    padding:10px;
+}
 
-        .preco-antigo{
-            font-size:14px;
-            color:#999;
-            text-decoration:line-through;
-        }
+.produto-imagem img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
 
-        .comprar{
-            display:block;
-            background:#25d366;
-            color:white;
-            text-align:center;
-            padding:10px;
-            border-radius:20px;
-            text-decoration:none;
-            transition:0.3s;
-        }
+.produto-info{
+    padding:15px;
+    text-align:center;
+}
 
-        .comprar:hover{
-            background:#1ebe5d;
-        }
+.preco{
+    font-size:22px;
+    color:#ff69b4;
+    font-weight:bold;
+    margin:10px 0;
+}
 
-        .rodape{
-            background:#333;
-            color:white;
-            text-align:center;
-            padding:20px;
-            margin-top:30px;
-        }
+.preco-antigo{
+    font-size:14px;
+    color:#999;
+    text-decoration:line-through;
+}
 
-    </style>  
-</head>  
-<body>  
-  
-<div class="topo">  
-    <h1>Ditto'store</h1>  
-    <p>Compre seu pokémon Ditto direto pelo WhatsApp</p>  
-</div>  
-  
-<div class="container">  
+.comprar,
+.carrinho-btn{
+    display:block;
+    width:100%;
+    margin-top:10px;
+    border:none;
+    padding:10px;
+    border-radius:20px;
+    cursor:pointer;
+    text-decoration:none;
+    color:white;
+    transition:0.3s;
+}
 
-    <div class="produtos">  
+.comprar{
+    background:#25d366;
+}
 
-        <div class="produto">  
+.comprar:hover{
+    background:#1ebe5d;
+}
+
+.carrinho-btn{
+    background:#ff69b4;
+}
+
+.carrinho-btn:hover{
+    background:#ff1493;
+}
+
+.formulario{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    margin-top:40px;
+    box-shadow:0 5px 10px rgba(0,0,0,0.1);
+}
+
+.formulario h2{
+    margin-bottom:15px;
+    text-align:center;
+}
+
+.formulario input,
+.formulario textarea{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:10px;
+    font-size:15px;
+}
+
+.formulario button{
+    width:100%;
+    padding:12px;
+    border:none;
+    background:#ff69b4;
+    color:white;
+    border-radius:20px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.formulario button:hover{
+    background:#ff1493;
+}
+
+#mensagem{
+    margin-top:10px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.rodape{
+    background:#333;
+    color:white;
+    text-align:center;
+    padding:20px;
+    margin-top:40px;
+}
+
+.dark{
+    background:#111;
+    color:white;
+}
+
+.dark .produto,
+.dark .formulario{
+    background:#222;
+    color:white;
+}
+
+.dark input,
+.dark textarea{
+    background:#333;
+    color:white;
+    border:1px solid #555;
+}
+
+.voltar-topo{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#ff69b4;
+    color:white;
+    border:none;
+    padding:15px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:18px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="topo">
+    <h1>Ditto'store</h1>
+    <p>Compre seu pokémon Ditto direto pelo WhatsApp</p>
+
+    <h3>
+        🛒 Carrinho:
+        <span id="contador">0</span>
+    </h3>
+
+    <button onclick="modoEscuro()">🌙 Modo Escuro</button>
+</div>
+
+<div class="container">
+
+    <input
+        type="text"
+        id="pesquisa"
+        placeholder="Pesquisar Ditto..."
+        onkeyup="pesquisar()"
+    >
+
+    <div class="produtos">
+
+        <div class="produto">
+
             <div class="produto-imagem">
-                <img src="https://giffiles.alphacoders.com/916/91637.gif" alt="Ditto pequeno">
-            </div>  
-            <div class="produto-info">  
-                <h2>Ditto 1</h2>  
-                <p>PEQUENO</p>  
-                <div class="preco">R$ 49.90</div>  
-                <a class="comprar" href="https://wa.me/5582981600505?text=Quero%20comprar%20Ditto%201%20-%20R$49,90">Comprar no WhatsApp</a>  
-            </div>  
-        </div>  
+                <img src="https://giffiles.alphacoders.com/916/91637.gif">
+            </div>
 
-        <div class="produto">  
+            <div class="produto-info">
+
+                <h2>Ditto 1</h2>
+
+                <p>PEQUENO</p>
+
+                <div class="preco">
+                    R$ 49.90
+                </div>
+
+                <a
+                    class="comprar"
+                    href="https://wa.me/5582981600505?text=Quero%20comprar%20Ditto%201"
+                    target="_blank"
+                >
+                    Comprar no WhatsApp
+                </a>
+
+                <button
+                    class="carrinho-btn"
+                    onclick="adicionarCarrinho()"
+                >
+                    Adicionar ao Carrinho
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="produto">
+
             <div class="produto-imagem">
-                <img src="https://giffiles.alphacoders.com/916/91637.gif" alt="Ditto grande">
-            </div>  
-            <div class="produto-info">  
-                <h2>Ditto 2</h2>  
-                <p>GRANDE</p>  
-                <div class="preco">R$ 59.90</div>  
-                <a class="comprar" href="https://wa.me/5582981600505?text=Quero%20comprar%20Ditto%202%20-%20R$59,90">Comprar no WhatsApp</a>  
-            </div>  
-        </div>  
+                <img src="https://giffiles.alphacoders.com/916/91637.gif">
+            </div>
 
-        <div class="produto">  
+            <div class="produto-info">
+
+                <h2>Ditto 2</h2>
+
+                <p>GRANDE</p>
+
+                <div class="preco">
+                    R$ 59.90
+                </div>
+
+                <a
+                    class="comprar"
+                    href="https://wa.me/5582981600505?text=Quero%20comprar%20Ditto%202"
+                    target="_blank"
+                >
+                    Comprar no WhatsApp
+                </a>
+
+                <button
+                    class="carrinho-btn"
+                    onclick="adicionarCarrinho()"
+                >
+                    Adicionar ao Carrinho
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="produto">
+
             <div class="produto-imagem">
-                <img src="https://giffiles.alphacoders.com/916/91637.gif" alt="Ditto médio">
-            </div>  
-            <div class="produto-info">  
-                <h2>Ditto 3</h2>  
-                <p>MÉDIO</p>  
-                <div class="preco">R$ 149.90 <span class="preco-antigo">R$ 299.90</span></div>  
-                <a class="comprar" href="https://wa.me/5582981600505?text=Quero%20comprar%20Ditto%203%20-%20R$149,90">Comprar no WhatsApp</a>  
-            </div>  
-        </div>  
+                <img src="https://giffiles.alphacoders.com/916/91637.gif">
+            </div>
 
-    </div>  
-</div>  
-  
-<div class="rodape"><p>Ditto'store - josy - 2026</p></div>  
-  
-</body>  
+            <div class="produto-info">
+
+                <h2>Ditto 3</h2>
+
+                <p>MÉDIO</p>
+
+                <div class="preco">
+                    R$ 149.90
+                    <span class="preco-antigo">
+                        R$ 299.90
+                    </span>
+                </div>
+
+                <a
+                    class="comprar"
+                    href="https://wa.me/5582981600505?text=Quero%20comprar%20Ditto%203"
+                    target="_blank"
+                >
+                    Comprar no WhatsApp
+                </a>
+
+                <button
+                    class="carrinho-btn"
+                    onclick="adicionarCarrinho()"
+                >
+                    Adicionar ao Carrinho
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="formulario">
+
+        <h2>Cadastro de Treinador Pokémon</h2>
+
+        <form onsubmit="return validarFormulario()">
+
+            <input
+                type="text"
+                id="nome"
+                placeholder="Digite seu nome"
+            >
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Digite seu email"
+            >
+
+            <input
+                type="password"
+                id="senha"
+                placeholder="Digite sua senha"
+            >
+
+            <textarea
+                id="mensagemTexto"
+                placeholder="Sugestões para novos Dittos"
+            ></textarea>
+
+            <button type="submit">
+                Cadastrar
+            </button>
+
+        </form>
+
+        <p id="mensagem"></p>
+
+    </div>
+
+</div>
+
+<div class="rodape">
+
+    <p>
+        Ditto'store - josy - 2026
+    </p>
+
+    <p id="relogio"></p>
+
+</div>
+
+<button
+    class="voltar-topo"
+    onclick="voltarTopo()"
+>
+⬆
+</button>
+
+<script>
+
+let carrinho = 0;
+
+function adicionarCarrinho(){
+
+    carrinho++;
+
+    document.getElementById("contador").innerText = carrinho;
+
+    alert("Ditto adicionado ao carrinho!");
+
+}
+
+function modoEscuro(){
+
+    document.body.classList.toggle("dark");
+
+}
+
+function pesquisar(){
+
+    let input =
+        document
+        .getElementById("pesquisa")
+        .value
+        .toLowerCase();
+
+    let produtos =
+        document.querySelectorAll(".produto");
+
+    produtos.forEach(produto => {
+
+        let texto =
+            produto.innerText.toLowerCase();
+
+        if(texto.includes(input)){
+
+            produto.style.display = "block";
+
+        }else{
+
+            produto.style.display = "none";
+
+        }
+
+    });
+
+}
+
+function validarFormulario(){
+
+    let nome =
+        document.getElementById("nome").value;
+
+    let email =
+        document.getElementById("email").value;
+
+    let senha =
+        document.getElementById("senha").value;
+
+    let mensagem =
+        document.getElementById("mensagem");
+
+    if(nome == ""){
+
+        mensagem.innerText =
+            "Digite seu nome!";
+
+        mensagem.style.color = "red";
+
+        return false;
+
+    }
+
+    if(email.indexOf("@") == -1){
+
+        mensagem.innerText =
+            "Email inválido!";
+
+        mensagem.style.color = "red";
+
+        return false;
+
+    }
+
+    if(senha.length < 6){
+
+        mensagem.innerText =
+            "A senha precisa ter no mínimo 6 caracteres!";
+
+        mensagem.style.color = "red";
+
+        return false;
+
+    }
+
+    mensagem.innerText =
+        "Cadastro realizado com sucesso!";
+
+    mensagem.style.color = "green";
+
+    return false;
+}
+
+function voltarTopo(){
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+function atualizarRelogio(){
+
+    let agora = new Date();
+
+    let hora =
+        agora.toLocaleTimeString();
+
+    document.getElementById("relogio")
+    .innerText =
+    "Horário atual: " + hora;
+
+}
+
+setInterval(atualizarRelogio, 1000);
+
+alert("🔥 Promoção especial: compre 2 Dittos e ganhe amor e carinho emocional.");
+
+</script>
+
+</body>
 </html>
