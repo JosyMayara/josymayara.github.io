@@ -1,560 +1,568 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ditto'store</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ditto'store</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Reset e Variáveis de Cores */
+        :root {
+            --primary: #ff69b4;
+            --primary-hover: #ff1493;
+            --whatsapp: #25d366;
+            --whatsapp-hover: #1ebe5d;
+            --bg-light: #f8f9fa;
+            --card-light: #ffffff;
+            --text-light: #333333;
+            --shadow: rgba(0, 0, 0, 0.08);
+            
+            /* Dark Mode */
+            --bg-dark: #121212;
+            --card-dark: #1e1e1e;
+            --text-dark: #f0f0f0;
+        }
 
-<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-light);
+            transition: background-color 0.3s, color 0.3s;
+            line-height: 1.6;
+        }
 
-body{
-    font-family:'Poppins', sans-serif;
-    background:#f0f0f0;
-    transition:0.4s;
-}
+        /* Topo / Header */
+        .topo {
+            background: var(--primary);
+            color: white;
+            padding: 25px 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
 
-.topo{
-    background:#ff69b4;
-    color:white;
-    padding:20px;
-    text-align:center;
-    position:sticky;
-    top:0;
-    z-index:1000;
-}
+        .topo h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
 
-.topo button{
-    margin-top:10px;
-    padding:8px 15px;
-    border:none;
-    border-radius:20px;
-    cursor:pointer;
-    background:white;
-    color:#ff69b4;
-    font-weight:bold;
-}
+        .topo p {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
 
-.container{
-    max-width:1200px;
-    margin:auto;
-    padding:15px;
-}
+        .carrinho-contador {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
 
-#pesquisa{
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:10px;
-    margin:20px 0;
-    font-size:16px;
-}
+        .topo button {
+            display: block;
+            margin: 5px auto 0;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            background: white;
+            color: var(--primary);
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
 
-.produtos{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,250px));
-    justify-content:center;
-    gap:20px;
-    margin:20px 0;
-}
+        .topo button:hover {
+            transform: scale(1.05);
+        }
 
-@keyframes flutuar{
-    0%{transform:translateY(0px);}
-    50%{transform:translateY(-8px);}
-    100%{transform:translateY(0px);}
-}
+        /* Container Principal */
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
 
-.produto{
-    background:white;
-    border-radius:10px;
-    overflow:hidden;
-    animation:flutuar 3s ease-in-out infinite;
-    transition:0.3s;
-    box-shadow:0 5px 10px rgba(0,0,0,0.1);
-}
+        /* Barra de Pesquisa */
+        #pesquisa {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            margin: 20px 0 30px 0;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 4px 12px var(--shadow);
+            outline: none;
+            transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+        }
 
-.produto:hover{
-    transform:scale(1.05);
-}
+        #pesquisa:focus {
+            border-color: var(--primary);
+        }
 
-.produto-imagem{
-    width:100%;
-    height:200px;
-    background:#f9f9f9;
-    padding:10px;
-}
+        /* Grid de Produtos */
+        .produtos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 50px;
+        }
 
-.produto-imagem img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-}
+        /* Card de Produto */
+        .produto {
+            background: var(--card-light);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s;
+            box-shadow: 0 6px 15px var(--shadow);
+            display: flex;
+            flex-direction: column;
+        }
 
-.produto-info{
-    padding:15px;
-    text-align:center;
-}
+        .produto:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
 
-.preco{
-    font-size:22px;
-    color:#ff69b4;
-    font-weight:bold;
-    margin:10px 0;
-}
+        .produto-imagem {
+            width: 100%;
+            height: 220px;
+            background: #fafafa;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba(0,0,0,0.03);
+            transition: background-color 0.3s;
+        }
 
-.preco-antigo{
-    font-size:14px;
-    color:#999;
-    text-decoration:line-through;
-}
+        .produto-imagem img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
 
-.comprar,
-.carrinho-btn{
-    display:block;
-    width:100%;
-    margin-top:10px;
-    border:none;
-    padding:10px;
-    border-radius:20px;
-    cursor:pointer;
-    text-decoration:none;
-    color:white;
-    transition:0.3s;
-}
+        .produto-info {
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
 
-.comprar{
-    background:#25d366;
-}
+        .produto-info h2 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
 
-.comprar:hover{
-    background:#1ebe5d;
-}
+        .produto-info p {
+            font-size: 0.85rem;
+            color: #777;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
 
-.carrinho-btn{
-    background:#ff69b4;
-}
+        /* Preços */
+        .container-preco {
+            margin: 15px 0;
+            min-height: 54px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
-.carrinho-btn:hover{
-    background:#ff1493;
-}
+        .preco {
+            font-size: 24px;
+            color: var(--primary);
+            font-weight: 700;
+        }
 
-.formulario{
-    background:white;
-    padding:25px;
-    border-radius:15px;
-    margin-top:40px;
-    box-shadow:0 5px 10px rgba(0,0,0,0.1);
-}
+        .preco-antigo {
+            font-size: 13px;
+            color: #999;
+            text-decoration: line-through;
+            display: block;
+        }
 
-.formulario h2{
-    margin-bottom:15px;
-    text-align:center;
-}
+        /* Botões */
+        .comprar, .carrinho-btn {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            border: none;
+            padding: 12px;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.2s, transform 0.1s;
+            text-align: center;
+        }
 
-.formulario input,
-.formulario textarea{
-    width:100%;
-    padding:12px;
-    margin:10px 0;
-    border:1px solid #ccc;
-    border-radius:10px;
-    font-size:15px;
-}
+        .comprar {
+            background: var(--whatsapp);
+        }
 
-.formulario button{
-    width:100%;
-    padding:12px;
-    border:none;
-    background:#ff69b4;
-    color:white;
-    border-radius:20px;
-    cursor:pointer;
-    font-size:16px;
-}
+        .comprar:hover {
+            background: var(--whatsapp-hover);
+        }
 
-.formulario button:hover{
-    background:#ff1493;
-}
+        .carrinho-btn {
+            background: var(--primary);
+        }
 
-#mensagem{
-    margin-top:10px;
-    text-align:center;
-    font-weight:bold;
-}
+        .carrinho-btn:hover {
+            background: var(--primary-hover);
+        }
 
-.rodape{
-    background:#333;
-    color:white;
-    text-align:center;
-    padding:20px;
-    margin-top:40px;
-}
+        .comprar:active, .carrinho-btn:active {
+            transform: scale(0.98);
+        }
 
-.dark{
-    background:#111;
-    color:white;
-}
+        /* Formulário */
+        .formulario {
+            background: var(--card-light);
+            padding: 35px;
+            border-radius: 16px;
+            margin: 40px auto;
+            max-width: 600px;
+            box-shadow: 0 6px 20px var(--shadow);
+            transition: background-color 0.3s;
+        }
 
-.dark .produto,
-.dark .formulario{
-    background:#222;
-    color:white;
-}
+        .formulario h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
 
-.dark input,
-.dark textarea{
-    background:#333;
-    color:white;
-    border:1px solid #555;
-}
+        .formulario input, .formulario textarea {
+            width: 100%;
+            padding: 14px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+            background-color: transparent;
+            color: inherit;
+            transition: border-color 0.3s;
+        }
 
-.voltar-topo{
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    background:#ff69b4;
-    color:white;
-    border:none;
-    padding:15px;
-    border-radius:50%;
-    cursor:pointer;
-    font-size:18px;
-}
+        .formulario input:focus, .formulario textarea:focus {
+            border-color: var(--primary);
+        }
 
-</style>
+        .formulario textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .formulario button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            background: var(--primary);
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+        }
+
+        .formulario button:hover {
+            background: var(--primary-hover);
+        }
+
+        #mensagem {
+            margin-top: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* Rodapé */
+        .rodape {
+            background: #222;
+            color: #aaa;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            font-size: 0.9rem;
+        }
+
+        .rodape p {
+            margin: 5px 0;
+        }
+
+        #relogio {
+            font-weight: 300;
+            color: #fff;
+        }
+
+        /* Botão Voltar ao Topo */
+        .voltar-topo {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: background-color 0.2s, transform 0.2s, opacity 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+        }
+
+        .voltar-topo:hover {
+            background: var(--primary-hover);
+            transform: scale(1.1);
+        }
+
+        /* Classes de Estilo para o Modo Escuro */
+        body.dark {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        body.dark .produto, body.dark .formulario {
+            background-color: var(--card-dark);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        body.dark #pesquisa {
+            background-color: var(--card-dark);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        body.dark .produto-imagem {
+            background-color: #252525;
+        }
+
+        body.dark .formulario input, body.dark .formulario textarea {
+            border-color: #444;
+        }
+        
+        body.dark .produto-info p {
+            color: #aaa;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="topo">
+<header class="topo">
     <h1>Ditto'store</h1>
     <p>Compre seu pokémon Ditto direto pelo WhatsApp</p>
 
-    <h3>
-        🛒 Carrinho:
-        <span id="contador">0</span>
-    </h3>
+    <div class="carrinho-contador">
+        🛒 Carrinho: <span id="contador">0</span>
+    </div>
 
-    <button onclick="modoEscuro()">🌙 Modo Escuro</button>
-</div>
+    <button onclick="modoEscuro()" id="btn-theme">🌙 Modo Escuro</button>
+</header>
 
-<div class="container">
+<main class="container">
 
-    <input
-        type="text"
-        id="pesquisa"
-        placeholder="Pesquisar Ditto..."
+    <input 
+        type="text" 
+        id="pesquisa" 
+        placeholder="Pesquisar por nome ou tamanho (ex: grande)..." 
         onkeyup="pesquisar()"
     >
 
-    <div class="produtos">
+    <section class="produtos">
 
         <div class="produto">
-
             <div class="produto-imagem">
-                <img src="https://giffiles.alphacoders.com/916/91637.gif">
+                <img src="https://giffiles.alphacoders.com/916/91637.gif" alt="Ditto Pequeno">
             </div>
-
             <div class="produto-info">
-
                 <h2>Ditto 1</h2>
-
                 <p>PEQUENO</p>
-
-                <div class="preco">
-                    R$ 49.90
+                <div class="container-preco">
+                    <div class="preco">R$ 49,90</div>
                 </div>
-
-                <a
-                    class="comprar"
-                    href="https://wa.me/5582981600505?text=Quero%20comprar%20Ditto%201"
-                    target="_blank"
-                >
+                <a class="comprar" href="https://wa.me/5582981600505?text=Quero%20comprar%20Ditto%201%20(Pequeno)" target="_blank">
                     Comprar no WhatsApp
                 </a>
-
-                <button
-                    class="carrinho-btn"
-                    onclick="adicionarCarrinho()"
-                >
+                <button class="carrinho-btn" onclick="adicionarCarrinho('Ditto 1')">
                     Adicionar ao Carrinho
                 </button>
-
             </div>
-
         </div>
 
         <div class="produto">
-
             <div class="produto-imagem">
-                <img src="https://giffiles.alphacoders.com/916/91637.gif">
+                <img src="https://giffiles.alphacoders.com/916/91637.gif" alt="Ditto Grande">
             </div>
-
             <div class="produto-info">
-
                 <h2>Ditto 2</h2>
-
                 <p>GRANDE</p>
-
-                <div class="preco">
-                    R$ 59.90
+                <div class="container-preco">
+                    <div class="preco">R$ 59,90</div>
                 </div>
-
-                <a
-                    class="comprar"
-                    href="https://wa.me/5582981600505?text=Quero%20comprar%20Ditto%202"
-                    target="_blank"
-                >
+                <a class="comprar" href="https://wa.me/5582981600505?text=Quero%20comprar%20Ditto%202%20(Grande)" target="_blank">
                     Comprar no WhatsApp
                 </a>
-
-                <button
-                    class="carrinho-btn"
-                    onclick="adicionarCarrinho()"
-                >
+                <button class="carrinho-btn" onclick="adicionarCarrinho('Ditto 2')">
                     Adicionar ao Carrinho
                 </button>
-
             </div>
-
         </div>
 
         <div class="produto">
-
             <div class="produto-imagem">
-                <img src="https://giffiles.alphacoders.com/916/91637.gif">
+                <img src="https://giffiles.alphacoders.com/916/91637.gif" alt="Ditto Médio">
             </div>
-
             <div class="produto-info">
-
                 <h2>Ditto 3</h2>
-
                 <p>MÉDIO</p>
-
-                <div class="preco">
-                    R$ 149.90
-                    <span class="preco-antigo">
-                        R$ 299.90
-                    </span>
+                <div class="container-preco">
+                    <span class="preco-antigo">R$ 299,90</span>
+                    <div class="preco">R$ 149,90</div>
                 </div>
-
-                <a
-                    class="comprar"
-                    href="https://wa.me/5582981600505?text=Quero%20comprar%20Ditto%203"
-                    target="_blank"
-                >
+                <a class="comprar" href="https://wa.me/5582981600505?text=Quero%20comprar%20Ditto%203%20(Médio)" target="_blank">
                     Comprar no WhatsApp
                 </a>
-
-                <button
-                    class="carrinho-btn"
-                    onclick="adicionarCarrinho()"
-                >
+                <button class="carrinho-btn" onclick="adicionarCarrinho('Ditto 3')">
                     Adicionar ao Carrinho
                 </button>
-
             </div>
-
         </div>
 
-    </div>
+    </section>
 
-    <div class="formulario">
-
+    <section class="formulario">
         <h2>Cadastro de Treinador Pokémon</h2>
-
-        <form onsubmit="return validarFormulario()">
-
-            <input
-                type="text"
-                id="nome"
-                placeholder="Digite seu nome"
-            >
-
-            <input
-                type="email"
-                id="email"
-                placeholder="Digite seu email"
-            >
-
-            <input
-                type="password"
-                id="senha"
-                placeholder="Digite sua senha"
-            >
-
-            <textarea
-                id="mensagemTexto"
-                placeholder="Sugestões para novos Dittos"
-            ></textarea>
-
-            <button type="submit">
-                Cadastrar
-            </button>
-
+        <form onsubmit="return validarFormulario(event)">
+            <input type="text" id="nome" placeholder="Digite seu nome" required>
+            <input type="email" id="email" placeholder="Digite seu email" required>
+            <input type="password" id="senha" placeholder="Digite sua senha (mín. 6 caracteres)" minlength="6" required>
+            <textarea id="mensagemTexto" placeholder="Sugestões para novos Dittos"></textarea>
+            <button type="submit">Cadastrar</button>
         </form>
-
         <p id="mensagem"></p>
+    </section>
 
-    </div>
+</main>
 
-</div>
+<footer class="rodape">
+    <p>Ditto'store &copy; Josy - 2026</p>
+    <p id="relogio">Carregando horário...</p>
+</footer>
 
-<div class="rodape">
-
-    <p>
-        Ditto'store - josy - 2026
-    </p>
-
-    <p id="relogio"></p>
-
-</div>
-
-<button
-    class="voltar-topo"
-    onclick="voltarTopo()"
->
-⬆
+<button class="voltar-topo" onclick="voltarTopo()" title="Voltar ao topo">
+    ▲
 </button>
 
 <script>
+    let carrinho = 0;
 
-let carrinho = 0;
+    // Adicionar item ao contador do carrinho
+    function adicionarCarrinho(nomeDitto) {
+        carrinho++;
+        document.getElementById("contador").innerText = carrinho;
+        alert(`O ${nomeDitto} foi adicionado ao seu carrinho!`);
+    }
 
-function adicionarCarrinho(){
-
-    carrinho++;
-
-    document.getElementById("contador").innerText = carrinho;
-
-    alert("Ditto adicionado ao carrinho!");
-
-}
-
-function modoEscuro(){
-
-    document.body.classList.toggle("dark");
-
-}
-
-function pesquisar(){
-
-    let input =
-        document
-        .getElementById("pesquisa")
-        .value
-        .toLowerCase();
-
-    let produtos =
-        document.querySelectorAll(".produto");
-
-    produtos.forEach(produto => {
-
-        let texto =
-            produto.innerText.toLowerCase();
-
-        if(texto.includes(input)){
-
-            produto.style.display = "block";
-
-        }else{
-
-            produto.style.display = "none";
-
+    // Alternar Modo Escuro e mudar o ícone/texto do botão
+    function modoEscuro() {
+        document.body.classList.toggle("dark");
+        const btnTheme = document.getElementById("btn-theme");
+        
+        if(document.body.classList.contains("dark")) {
+            btnTheme.innerText = "☀️ Modo Claro";
+        } else {
+            btnTheme.innerText = "🌙 Modo Escuro";
         }
-
-    });
-
-}
-
-function validarFormulario(){
-
-    let nome =
-        document.getElementById("nome").value;
-
-    let email =
-        document.getElementById("email").value;
-
-    let senha =
-        document.getElementById("senha").value;
-
-    let mensagem =
-        document.getElementById("mensagem");
-
-    if(nome == ""){
-
-        mensagem.innerText =
-            "Digite seu nome!";
-
-        mensagem.style.color = "red";
-
-        return false;
-
     }
 
-    if(email.indexOf("@") == -1){
+    // Sistema de busca em tempo real melhorado
+    function pesquisar() {
+        let input = document.getElementById("pesquisa").value.toLowerCase();
+        let produtos = document.querySelectorAll(".produto");
 
-        mensagem.innerText =
-            "Email inválido!";
-
-        mensagem.style.color = "red";
-
-        return false;
-
+        produtos.forEach(produto => {
+            let textoCard = produto.innerText.toLowerCase();
+            // Verifica se o texto pesquisado bate com o nome ou a descrição interna do card
+            if (textoCard.includes(input)) {
+                produto.style.display = "flex"; // Mantém a estrutura Flexbox original do card
+            } else {
+                produto.style.display = "none";
+            }
+        });
     }
 
-    if(senha.length < 6){
+    // Validação Avançada usando recursos do HTML5
+    function validarFormulario(event) {
+        event.preventDefault(); // Impede o recarregamento padrão do formulário
+        
+        let mensagem = document.getElementById("mensagem");
+        
+        // Se chegou até aqui, os atributos 'required' e 'minlength' do HTML5 já validaram os campos básicos.
+        mensagem.innerText = "Cadastro realizado com sucesso! Seja bem-vindo, Treinador.";
+        mensagem.style.color = "#25d366";
 
-        mensagem.innerText =
-            "A senha precisa ter no mínimo 6 caracteres!";
-
-        mensagem.style.color = "red";
-
-        return false;
-
+        // Limpa o formulário após o sucesso
+        event.target.reset();
     }
 
-    mensagem.innerText =
-        "Cadastro realizado com sucesso!";
+    // Rolagem suave para o topo
+    function voltarTopo() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
 
-    mensagem.style.color = "green";
+    // Atualização dinâmica do relógio no rodapé
+    function atualizarRelogio() {
+        let agora = new Date();
+        let hora = agora.toLocaleTimeString('pt-BR');
+        document.getElementById("relogio").innerText = "Horário atual: " + hora;
+    }
 
-    return false;
-}
+    // Inicializadores e loops
+    setInterval(atualizarRelogio, 1000);
+    atualizarRelogio(); // Roda imediatamente ao carregar
 
-function voltarTopo(){
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
-
-}
-
-function atualizarRelogio(){
-
-    let agora = new Date();
-
-    let hora =
-        agora.toLocaleTimeString();
-
-    document.getElementById("relogio")
-    .innerText =
-    "Horário atual: " + hora;
-
-}
-
-setInterval(atualizarRelogio, 1000);
-
-alert("🔥 Promoção especial: compre 2 Dittos e ganhe amor e carinho emocional.");
-
+    // Mensagem de boas-vindas após carregar a página
+    window.onload = () => {
+        setTimeout(() => {
+            alert("🔥 Promoção especial: compre 2 Dittos e ganhe amor e apoio emocional!");
+        }, 500);
+    };
 </script>
 
 </body>
